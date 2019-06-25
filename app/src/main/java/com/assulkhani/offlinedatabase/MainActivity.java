@@ -1,16 +1,25 @@
 package com.assulkhani.offlinedatabase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
 
+public class MainActivity extends AppCompatActivity {
+    RecyclerView recycler;
+
+    List<CatatanModel> dataCatatan = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +31,29 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this, TambahCatatanActivity.class));
             }
         });
+
+        //1. membuat layout per item
+        //2. membuat data model
+        CatatanModel catatan = new CatatanModel();
+        catatan.setId("1");
+        catatan.setJudul("Catatan A");
+        catatan.setJumlah("1000");
+        catatan.setTanggal("08-05-1997");
+
+        for (int i = 0; i <20 ; i++) {
+            dataCatatan.add(catatan);
+
+        }
+        //3. membuat adapter
+        recycler = findViewById(R.id.recyclerView);
+        recycler.setAdapter(new CatatanAdapter(MainActivity.this, dataCatatan));
+        //4. membuat data manager
+        recycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        recycler.setHasFixedSize(true);
+        recycler.addItemDecoration(new DividerItemDecoration(MainActivity.this, 1));
     }
 
     @Override
