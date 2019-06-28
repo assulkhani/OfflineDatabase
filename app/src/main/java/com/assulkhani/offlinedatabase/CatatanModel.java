@@ -1,6 +1,10 @@
 package com.assulkhani.offlinedatabase;
 
-public class CatatanModel {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class CatatanModel extends RealmObject {
+    @PrimaryKey
     private String id;
     private String judul;
     private String jumlah;
